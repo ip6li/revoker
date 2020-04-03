@@ -21,6 +21,8 @@ import javax.ws.rs.BadRequestException;
 import javax.ws.rs.NotAllowedException;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.Response;
+
+import io.dropwizard.testing.junit5.ResourceExtension;
 import org.bouncycastle.asn1.ASN1ObjectIdentifier;
 import org.bouncycastle.asn1.DEROctetString;
 import org.bouncycastle.asn1.ocsp.OCSPObjectIdentifiers;
@@ -323,7 +325,7 @@ public class OCSPResponderResourceTest {
         assertThat(ocspResp.getStatus()).isEqualTo(OCSPRespBuilder.SUCCESSFUL);
         assertThat(ocspResp.getResponseObject()).isExactlyInstanceOf(BasicOCSPResp.class);
         BasicOCSPResp basicResponse = (BasicOCSPResp)ocspResp.getResponseObject();
-        assertThat(basicResponse.getProducedAt()).isAfterOrEqualsTo(NOW.toDate());
+        assertThat(basicResponse.getProducedAt()).isAfterOrEqualTo(NOW.toString());
 
         // check signature
         boolean validSignature = basicResponse.isSignatureValid(

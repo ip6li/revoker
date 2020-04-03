@@ -1,11 +1,13 @@
 package wdawson.samples.revoker.resources;
 
-import io.dropwizard.testing.junit.ResourceTestRule;
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.security.cert.CertificateFactory;
 import java.security.cert.X509CRL;
 import javax.ws.rs.NotFoundException;
+
+import io.dropwizard.testing.junit.ResourceTestRule;
+import io.dropwizard.testing.junit5.ResourceExtension;
 import org.junit.After;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
@@ -13,7 +15,6 @@ import org.junit.Test;
 import wdawson.samples.revoker.managers.CertificateManager;
 import wdawson.samples.revoker.parsers.crl.X509CRLMessageBodyReader;
 import wdawson.samples.revoker.parsers.crl.X509CRLMessageBodyWriter;
-
 import static io.dropwizard.testing.ResourceHelpers.resourceFilePath;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.failBecauseExceptionWasNotThrown;
@@ -30,6 +31,7 @@ public class CRLDistributionPointResourceTest {
     private static CertificateFactory certificateFactory;
 
     private static final CertificateManager certificateManager = mock(CertificateManager.class);
+
 
     @ClassRule
     public static final ResourceTestRule resources = ResourceTestRule.builder()
@@ -75,4 +77,5 @@ public class CRLDistributionPointResourceTest {
         X509CRL response = resources.client().target("/crls").path("/crl.pem").request().get(X509CRL.class);
         assertThat(response).isEqualTo(expected);
     }
+
 }

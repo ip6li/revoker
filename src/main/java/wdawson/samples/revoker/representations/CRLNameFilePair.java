@@ -3,6 +3,7 @@ package wdawson.samples.revoker.representations;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.hibernate.validator.constraints.NotEmpty;
 
+
 /**
  * Holds the name and file path for a CRL
  *
