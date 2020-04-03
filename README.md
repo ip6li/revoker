@@ -7,7 +7,7 @@ This app is a Dropwizard app that can respond to CRL requests and OCSP requests 
 with access to the index file of the CA, which is effectively the database for the CA, the crl file, and a Java KeyStore
 containing the key and certificate chain to sign the OCSP responses with. This is all done within the `conf.yml` file.
 
-[![Build Status](https://travis-ci.org/wdawson/revoker.svg?branch=master)](https://travis-ci.org/wdawson/revoker)
+[![Build Status](https://travis-ci.com/ip6li/revoker.svg?branch=master)](https://travis-ci.com/ip6li/revoker)
 
 # Running the application
 
