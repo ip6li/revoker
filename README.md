@@ -1,5 +1,5 @@
 # Introduction
-This repository contains a Java 8 implementation of a Certificate Revocation List (CRL) Distribution Point and an Online
+This repository contains a Java 11 implementation of a Certificate Revocation List (CRL) Distribution Point and an Online
 Certificate Status Protocol (OCSP) Responder.
 
 # Overview
