@@ -149,20 +149,6 @@ public enum RevocationReason {
             .build();
 
     /**
-     * Return the RevocationReason with the given code.
-     *
-     * @param code The code.
-     * @return The RevocationReason.
-     */
-    public static RevocationReason fromCode(int code) {
-        if (code > NUM_CODES - 1 || code < 0 || code == 7) {
-            throw new IllegalArgumentException("CRL Reason code not recognized: " + code);
-        }
-
-        return RevocationReason.values()[code];
-    }
-
-    /**
      * Return the RevocationReason with the given name.
      *
      * @param name The name.

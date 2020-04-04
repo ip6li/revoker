@@ -245,7 +245,7 @@ public class OCSPResponderResource {
             );
         }
 
-        Extension[] extensions = responseExtensions.toArray(new Extension[responseExtensions.size()]);
+        Extension[] extensions = responseExtensions.toArray(new Extension[0]);
         responseBuilder.setResponseExtensions(new Extensions(extensions));
 
         // Check that each request is valid and put the appropriate response in the builder

@@ -19,10 +19,6 @@ public class CRLNameFilePair {
     @JsonProperty
     private String filePath;
 
-    public CRLNameFilePair() {
-        // Jackson initialization
-    }
-
     public CRLNameFilePair(String name, String filePath) {
         this.name = name;
         this.filePath = filePath;
@@ -32,15 +28,8 @@ public class CRLNameFilePair {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public String getFilePath() {
         return filePath;
     }
 
-    public void setFilePath(String filePath) {
-        this.filePath = filePath;
-    }
 }

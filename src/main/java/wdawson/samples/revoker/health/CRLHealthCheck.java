@@ -4,10 +4,7 @@ import com.codahale.metrics.health.HealthCheck;
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.security.cert.CertificateFactory;
-import java.security.cert.X509CRL;
 import java.util.List;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import wdawson.samples.revoker.representations.CRLNameFilePair;
 
 /**
@@ -16,7 +13,6 @@ import wdawson.samples.revoker.representations.CRLNameFilePair;
  * @author wdawson
  */
 public class CRLHealthCheck extends HealthCheck {
-    private static final Logger LOG = LoggerFactory.getLogger(CRLHealthCheck.class);
 
     private List<CRLNameFilePair> crlFiles;
 
@@ -28,7 +24,7 @@ public class CRLHealthCheck extends HealthCheck {
     }
 
     @Override
-    protected Result check() throws Exception {
+    protected Result check() {
         try {
             checkThatAllCRLFilesAreReadable();
             return Result.healthy();
@@ -41,9 +37,9 @@ public class CRLHealthCheck extends HealthCheck {
         crlFiles.forEach(pair -> makeCRL(pair.getFilePath()));
     }
 
-    private X509CRL makeCRL(String fileName) {
+    private void makeCRL(String fileName) {
         try (InputStream crlStream = new FileInputStream(fileName)) {
-            return (X509CRL) certificateFactory.generateCRL(crlStream);
+            certificateFactory.generateCRL(crlStream);
         } catch (Exception e) {
             throw new IllegalStateException("Could not parse CRL: " + fileName, e);
         }

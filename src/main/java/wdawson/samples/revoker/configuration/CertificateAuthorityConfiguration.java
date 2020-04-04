@@ -38,23 +38,12 @@ public class CertificateAuthorityConfiguration {
         return caIndexFile;
     }
 
-    public void setCaIndexFile(String caIndexFile) {
-        this.caIndexFile = caIndexFile;
-    }
-
     public int getRefreshSeconds() {
         return refreshSeconds;
-    }
-
-    public void setRefreshSeconds(int refreshSeconds) {
-        this.refreshSeconds = refreshSeconds;
     }
 
     public List<CRLNameFilePair> getCrlFiles() {
         return crlFiles;
     }
 
-    public void setCrlFiles(List<CRLNameFilePair> crlFiles) {
-        this.crlFiles = crlFiles;
-    }
 }

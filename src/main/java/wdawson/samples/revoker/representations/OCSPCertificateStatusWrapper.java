@@ -27,16 +27,8 @@ public class OCSPCertificateStatusWrapper {
         return certificateStatus;
     }
 
-    public DateTime getThisUpdate() {
-        return thisUpdate;
-    }
-
     public Date getThisUpdateDate() {
         return thisUpdate == null ? null : thisUpdate.toDate();
-    }
-
-    public DateTime getNextUpdate() {
-        return nextUpdate;
     }
 
     public Date getNextUpdateDate() {

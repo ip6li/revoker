@@ -1,6 +1,6 @@
 package wdawson.samples.revoker.parsers.crl;
 
-import java.io.IOException;
+
 import java.io.InputStream;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Type;
@@ -53,7 +53,7 @@ public class X509CRLMessageBodyReader implements MessageBodyReader<X509CRL> {
                             Annotation[] annotations,
                             MediaType mediaType,
                             MultivaluedMap<String, String> httpHeaders,
-                            InputStream entityStream) throws IOException, WebApplicationException {
+                            InputStream entityStream) throws WebApplicationException {
         try {
             return (X509CRL) CERTIFICATE_FACTORY.generateCRL(entityStream);
         } catch (CRLException e) {

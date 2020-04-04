@@ -33,8 +33,6 @@ public class CertificateSummary {
     private final DateTime revocationTime;
     private final RevocationReason revocationReason;
     private final BigInteger serialNumber;
-    private final String fileName;
-    private final X500Principal subjectDN;
 
     private final DateTime thisUpdateTime;
 
@@ -58,14 +56,6 @@ public class CertificateSummary {
         return serialNumber;
     }
 
-    public String getFileName() {
-        return fileName;
-    }
-
-    public X500Principal getSubjectDN() {
-        return subjectDN;
-    }
-
     public DateTime getThisUpdateTime() {
         return thisUpdateTime;
     }
@@ -76,8 +66,6 @@ public class CertificateSummary {
         revocationTime = builder.revocationTime;
         revocationReason = builder.revocationReason;
         serialNumber = builder.serialNumber;
-        fileName = builder.fileName;
-        subjectDN = builder.subjectDN;
         thisUpdateTime = builder.thisUpdateTime == null ? DateTime.now() : builder.thisUpdateTime;
     }
 
@@ -91,8 +79,6 @@ public class CertificateSummary {
         private DateTime revocationTime = null;
         private RevocationReason revocationReason = null;
         private BigInteger serialNumber = null;
-        private String fileName = null;
-        private X500Principal subjectDN = null;
 
         private DateTime thisUpdateTime = null;
 
@@ -125,12 +111,10 @@ public class CertificateSummary {
         }
 
         public Builder withFileName(String val) {
-            fileName = val;
             return this;
         }
 
         public Builder withSubjectDN(X500Principal val) {
-            subjectDN = val;
             return this;
         }
 
