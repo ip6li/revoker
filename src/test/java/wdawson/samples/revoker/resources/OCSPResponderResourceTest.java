@@ -1,6 +1,5 @@
 package wdawson.samples.revoker.resources;
 
-import com.google.common.collect.Lists;
 import com.google.common.io.Resources;
 import io.dropwizard.testing.junit.ResourceTestRule;
 import java.io.IOException;
@@ -16,13 +15,11 @@ import java.security.cert.Certificate;
 import java.security.cert.CertificateEncodingException;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
-import java.util.List;
+import java.util.ArrayList;
 import javax.ws.rs.BadRequestException;
 import javax.ws.rs.NotAllowedException;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.Response;
-
-import io.dropwizard.testing.junit5.ResourceExtension;
 import org.bouncycastle.asn1.ASN1ObjectIdentifier;
 import org.bouncycastle.asn1.DEROctetString;
 import org.bouncycastle.asn1.ocsp.OCSPObjectIdentifiers;
@@ -62,7 +59,6 @@ import wdawson.samples.revoker.representations.CertificateStatus;
 import wdawson.samples.revoker.representations.CertificateSummary;
 import wdawson.samples.revoker.representations.OCSPCertificateStatusWrapper;
 import wdawson.samples.revoker.representations.RevocationReason;
-
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.failBecauseExceptionWasNotThrown;
 import static org.bouncycastle.cert.ocsp.CertificateStatus.GOOD;
@@ -76,6 +72,7 @@ import static wdawson.samples.revoker.representations.RevocationReason.SUPERSEDE
  * @author wdawson
  */
 public class OCSPResponderResourceTest {
+    private final static String keyStorePassword="changeit";
 
     private final static DateTime NOW = DateTime.now().withMillisOfSecond(0);
     private final static DateTime EXPIRE = NOW.plusYears(1);
@@ -330,16 +327,15 @@ public class OCSPResponderResourceTest {
         // check signature
         boolean validSignature = basicResponse.isSignatureValid(
                 new JcaContentVerifierProviderBuilder().setProvider("BC").build(signingCertificate.getPublicKey()));
+        //noinspection ResultOfMethodCallIgnored
         assertThat(validSignature).isTrue().withFailMessage("Signature was invalid");
         assertThat(basicResponse.getSignatureAlgorithmID()).isEqualTo(
                 new DefaultSignatureAlgorithmIdentifierFinder().find("SHA256withRSA")
         );
 
         // check extensions
-        List<ASN1ObjectIdentifier> extensionOIDs = Lists.transform(
-                (List<?>) basicResponse.getExtensionOIDs(),
-                input -> (ASN1ObjectIdentifier) input  // just casting here
-        );
+        @SuppressWarnings("unchecked")
+        ArrayList<ASN1ObjectIdentifier> extensionOIDs = new ArrayList<ASN1ObjectIdentifier>(basicResponse.getExtensionOIDs());
         assertThat(extensionOIDs).containsExactly(OCSPObjectIdentifiers.id_pkix_ocsp_nonce);
 
         Extension reqNonce = ocspReq.getExtension(OCSPObjectIdentifiers.id_pkix_ocsp_nonce);
@@ -478,7 +474,7 @@ public class OCSPResponderResourceTest {
         KeyStore keyStore = loadKeyStore();
 
         try {
-            return signingKey = (PrivateKey) keyStore.getKey("ocsp-signing", "notsecret".toCharArray());
+            return signingKey = (PrivateKey) keyStore.getKey("ocsp-signing", keyStorePassword.toCharArray());
         } catch (KeyStoreException | UnrecoverableKeyException | NoSuchAlgorithmException e) {
             throw new RuntimeException(e);
         }
@@ -486,8 +482,9 @@ public class OCSPResponderResourceTest {
 
     private static KeyStore loadKeyStore() {
         try {
-            KeyStore ocspKeyStore = KeyStore.getInstance("JKS");
-            ocspKeyStore.load(Resources.getResource("ocsp/ocsp-signing.jks").openStream(), "notsecret".toCharArray());
+            KeyStore ocspKeyStore = KeyStore.getInstance("PKCS12");
+            //noinspection UnstableApiUsage
+            ocspKeyStore.load(Resources.getResource("ocsp/ocsp-signing.p12").openStream(), keyStorePassword.toCharArray());
             return ocspKeyStore;
         } catch (KeyStoreException | IOException | NoSuchAlgorithmException | CertificateException e) {
             throw new RuntimeException(e);

@@ -5,9 +5,7 @@ import java.io.InputStream;
 import java.security.cert.CertificateFactory;
 import java.security.cert.X509CRL;
 import javax.ws.rs.NotFoundException;
-
 import io.dropwizard.testing.junit.ResourceTestRule;
-import io.dropwizard.testing.junit5.ResourceExtension;
 import org.junit.After;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;

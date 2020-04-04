@@ -22,7 +22,7 @@
 
         <!-- Other Versions -->
         <!-- See: https://maven.apache.org/enforcer/enforcer-rules/versionRanges.html -->
-        <java.required.version>[1.8.0,19)</java.required.version> <!-- 1.8.0 <= version < 1.9.0 -->
+        <java.required.version>[11,13)</java.required.version> <!-- 11 <= version < 13 -->
         <java.compile.version>11</java.compile.version>
         <java.compile.version>11</java.compile.version>
         <maven.required.version>3.0.0</maven.required.version> <!-- >= 3.0.0 -->
@@ -38,11 +38,13 @@
             <artifactId>dropwizard-core</artifactId>
             <version>${io.dropwizard.version}</version>
         </dependency>
+
         <dependency>
             <groupId>org.bouncycastle</groupId>
             <artifactId>bcprov-jdk15on</artifactId>
             <version>${org.bouncycastle.version}</version>
         </dependency>
+
         <dependency>
             <groupId>org.bouncycastle</groupId>
             <artifactId>bcpkix-jdk15on</artifactId>
